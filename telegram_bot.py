@@ -11,15 +11,12 @@ from crud_functions import *
 initiate_db()
 initiate_users_db()
 
-# for i in range(1, 4 + 1):
-#     cursor.execute(" INSERT INTO Products(title, description, price) VALUES (?, ?, ?)",
-#                    (f'банка{i}', f'{i} - хороша банка', i * 10))
 
-api = '7514207461:AAGu7ivIl_q3aDoo9-HQeRZEklGmNYjblD8'
+api = ''
 bot = ai.Bot(token=api)
 dp = ai.Dispatcher(bot, storage=MemoryStorage())
 
-"""Создание клавиатуры кнопок"""
+
 keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
 button = KeyboardButton(text='Информация')
 button1 = KeyboardButton(text='Рассчитать')
@@ -29,12 +26,8 @@ keyboard.row(button)
 keyboard.row(button1)
 keyboard.insert(button2)
 keyboard.row(button3)
-"""
-keyboard.row - позволяет вставить блок кнопки в ряд 
-keyboard.insert - вставляет блоки в нижние ряды до тех пор, пока они не заполнятся,
- в таком случае она перейдет на ряд выше 
- """
-"""Создание инлайновых(внутри сообщений) кнопок"""
+
+
 kb_il = InlineKeyboardMarkup()
 Inline_button = InlineKeyboardButton(text='Рассчитать норму калорий', callback_data='calories')
 Inline_button1 = InlineKeyboardButton(text='Формулы расчёта', callback_data='formulas')
@@ -49,18 +42,6 @@ kb_in = InlineKeyboardMarkup(
          InlineKeyboardButton(text="Product4", callback_data="product_buying")]
     ]
 )
-
-# """Другой способ создания клавиатуры кнопок"""
-# start_menu = ReplyKeyboardMarkup(keyboard=[
-#     [KeyboardButton(text='Info')],#Один список = один ряд
-#     [
-#         KeyboardButton(text='Shop'),#Два списка в одном ряду
-#         KeyboardButton(text='Donat')
-#     ]
-# ])
-
-
-"""Логика их работы"""
 
 
 @dp.message_handler(commands=['start'])
@@ -80,16 +61,9 @@ async def get_formulas(call):
     await call.answer()
 
 
-"""Эта ^^^ строчка нужна, чтобы заканчивать вызов кнопки"""
-
-
 @dp.message_handler(text='Информация')
 async def info(message):
     await message.answer("Меня сделал Никитос")
-
-
-"""Чтобы достать из отправленного боту сообщения текст нужно брать параметр текст
-message.text"""
 
 
 class RegistrationState(StatesGroup):
@@ -184,10 +158,10 @@ async def send_confirm_message(call):
     await call.answer()
 
 
-# @dp.message_handler()
-# async def all_message(message):
-#     print('Введите команду /start, чтобы начать общение.')
-#     await message.answer('Введите команду /start, чтобы начать общение.')
+@dp.message_handler()
+async def all_message(message):
+    print('Введите команду /start, чтобы начать общение.')
+    await message.answer('Введите команду /start, чтобы начать общение.')
 
 
 if __name__ == '__main__':
